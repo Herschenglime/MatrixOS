@@ -17,4 +17,5 @@ class Game {
   void init();
   void init(bool debug);
   bool moveRight();
+  bool moveLeft();
 };

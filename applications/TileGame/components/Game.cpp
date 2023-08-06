@@ -30,6 +30,9 @@ void Game::init(bool debug) {
 }
 
 bool Game::moveRight() {
+  // keep track of whether any tiles actually moved (to control spawning)
+  bool tileMoved = false;
+
   // move each tile from right to left in each column
   for (int8_t colNum = 3; colNum >= 0; colNum--)
   {
@@ -61,28 +64,49 @@ bool Game::moveRight() {
 
           auto& nextTile = *nextTilePtr;
           MLOGD("TileGame", "Tile for comparison is at (%d, %d) and has rank %d", nextCol, rowNum, nextTile.getRank());
-          // if not on the right edge, compare current tile
-          if (nextCol < 4)
+          if (nextTile.getRank() == 0)
           {
-            if (origTile.getRank() == nextTile.getRank())
+            // move tile to new location
+            grid.moveTile(origTile, nextTile);
+            MLOGD("TileGame", "tile moved to edge.");
+
+            tileMoved = true;
+          }
+          // if not on the right edge, compare current tile
+          else if (origTile.getRank() == nextTile.getRank())
+          {
+            // do combination, implement later
+            MLOGD("TileGame", "Tiles combined!");
+
+            tileMoved = true;
+          }
+          else
+          {
+            // check if tile actually moves
+            if (colNum == --nextCol)
             {
-              // do combination, implement later
-              MLOGD("TileGame", "Tiles combined!");
+              MLOGD("TileGame", "tile couldn't move.");
             }
+
             else
             {
-              // move tile to new location
-              grid.moveTile(origTile, nextTile);
+              // move tile to column before next tile of different rank
+              grid.moveTile(origTile, grid.tiles.at(nextCol).at(rowNum));
               MLOGD("TileGame", "tile moved.");
             }
           }
+        }
+
+        else
+        {
+          MLOGD("TileGame", "tile was already at edge.");
         }
       }
     }
   }
 
   MLOGD("TileGame", "MoveRight complete!");
-  return true;
+  return tileMoved;
 }
 
 void Game::spawnTile() {
