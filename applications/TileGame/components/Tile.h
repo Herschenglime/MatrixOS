@@ -31,7 +31,7 @@ class Tile {
 
   const vector<Point> getSubPoints();
   void reset();
-  const uint8_t getRank();
+  uint8_t getRank() const;
   void rankUp();
   void setRank(uint8_t newRank);
 

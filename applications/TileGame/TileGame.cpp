@@ -36,6 +36,18 @@ void TileGameAPP::KeyEventHandler(uint16_t keyID, KeyInfo* keyInfo) {
     if (keyInfo->state == RELEASED)
     {
       // handle keypresses (on either side)
+      if (xy == Point(1, 6) || xy == Point(6, 6))
+      {
+        game.moveUp();
+      }
+      if (xy == Point(0, 7) || xy == Point(5, 7))
+      {
+        game.moveLeft();
+      }
+      if (xy == Point(1, 7) || xy == Point(6, 7))
+      {
+        game.moveDown();
+      }
       if (xy == Point(2, 7) || xy == Point(7, 7))
       {
         game.moveRight();

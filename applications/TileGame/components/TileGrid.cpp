@@ -19,13 +19,9 @@ TileGrid::TileGrid() {
       Point bottomLeft(2 * colNum, 2 * rowNum + 1);
       Point bottomRight(2 * colNum + 1, 2 * rowNum + 1);
 
-      MLOGD("TileGame", "Points are (%d, %d), (%d, %d), (%d, %d), (%d, %d)", 
-      topLeft.x, topLeft.y,
-      topRight.x, topRight.y,
-      bottomLeft.x, bottomLeft.y,
-      bottomRight.x, bottomRight.y
-      );
-     
+      MLOGD("TileGame", "Points are (%d, %d), (%d, %d), (%d, %d), (%d, %d)", topLeft.x, topLeft.y, topRight.x, topRight.y, bottomLeft.x, bottomLeft.y, bottomRight.x,
+            bottomRight.y);
+
       Tile newTile(topLeft, topRight, bottomLeft, bottomRight);
       MLOGD("TileGame", "New tile created");
 
@@ -36,4 +32,15 @@ TileGrid::TileGrid() {
     tiles.push_back(column);
     MLOGD("TileGame", "Column added to grid");
   }
+}
+
+void TileGrid::moveTile(Tile& originalPos, Tile& newPos) {
+  newPos.setRank(originalPos.getRank());
+  originalPos.setRank(0);
+}
+
+void TileGrid::combineTiles(Tile& original, Tile& destination) {
+  destination.rankUp();
+  original.setRank(0);
+  MLOGD("TileGame", "Tiles combined!");
 }

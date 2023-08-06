@@ -9,8 +9,6 @@ struct TileGrid {
   // constructor
   TileGrid();
 
-  void moveTile(Tile& originalPos, Tile& newPos) {
-    newPos.setRank(originalPos.getRank());
-    originalPos.setRank(0);
-  }
+  void moveTile(Tile& originalPos, Tile& newPos);
+  void combineTiles(Tile& original, Tile& destination);
 };

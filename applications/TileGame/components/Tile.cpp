@@ -19,7 +19,7 @@ void Tile::reset() {
   rank = 0;
 }
 
-const uint8_t Tile::getRank() {
+uint8_t Tile::getRank() const {
   return rank;
 }
 
