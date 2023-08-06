@@ -268,6 +268,89 @@ bool Game::moveDown() {
   MLOGD("TileGame", "MoveDown complete!");
   return tileMoved;
 }
+bool Game::moveUp() {
+  // keep track of whether any tiles actually moved (to control spawning)
+  bool tileMoved = false;
+
+  // move each tile from top to bottom in each row
+  for (int8_t rowNum = 0; rowNum < 4; rowNum++)
+  {
+    //make convenience vector to make code more copyable from other move methods
+    vector<Tile*> row;
+    row.reserve(4);
+    for (uint8_t i = 0; i < 4; i++)
+    {
+      row.push_back(&grid.tiles.at(i).at(rowNum));
+    }
+
+    for (uint8_t colNum = 0; colNum < 4; colNum++)
+    {
+      Tile& origTile = *row.at(colNum);
+      MLOGD("TileGame", "Original tile is at (%d, %d) and has rank %d", colNum, rowNum, origTile.getRank());
+
+      //   only move tile if there's something there (i.e. has rank)
+      if (origTile.getRank() > 0)
+      {
+        // only tiles not on the right edge can move
+        int8_t prevRow = rowNum - 1;
+
+        if (prevRow > -1)
+        {
+          Tile* prevTilePtr = &grid.tiles.at(colNum).at(prevRow);
+          MLOGD("TileGame", "Prev tile is at (%d, %d) and has rank %d", colNum, prevRow, prevTilePtr->getRank());
+
+          // check rank of tile below
+          // if 0, look for the next one (keeping in mind boundaries of grid)
+          while (prevTilePtr->getRank() == 0 && prevRow > 0)
+          {
+            prevTilePtr = &grid.tiles.at(colNum).at(--prevRow);
+            MLOGD("TileGame", "Row of prevTile is %d", prevRow);
+          }
+
+          auto& prevTile = *prevTilePtr;
+          MLOGD("TileGame", "Tile for comparison is at (%d, %d) and has rank %d",colNum, prevRow, prevTile.getRank());
+          if (prevTile.getRank() == 0)
+          {
+            // move tile to new location
+            grid.moveTile(origTile, prevTile);
+            MLOGD("TileGame", "tile moved to edge.");
+
+            tileMoved = true;
+          }
+          // if not on the bottom edge, compare current tile
+          else if (origTile.getRank() == prevTile.getRank())
+          {
+            grid.combineTiles(origTile, prevTile);
+            tileMoved = true;
+          }
+          else
+          {
+            // check if tile actually moves
+            if (rowNum == ++prevRow)
+            {
+              MLOGD("TileGame", "tile couldn't move.");
+            }
+
+            else
+            {
+              // move tile to column before next tile of different rank
+              grid.moveTile(origTile, grid.tiles.at(colNum).at(prevRow));
+              MLOGD("TileGame", "tile moved.");
+            }
+          }
+        }
+
+        else
+        {
+          MLOGD("TileGame", "tile was already at edge.");
+        }
+      }
+    }
+  }
+
+  MLOGD("TileGame", "MoveUp complete!");
+  return tileMoved;
+}
 
 void Game::spawnTile() {
   // randomize later

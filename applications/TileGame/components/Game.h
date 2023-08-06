@@ -19,4 +19,5 @@ class Game {
   bool moveRight();
   bool moveLeft();
   bool moveDown();
+  bool moveUp();
 };
