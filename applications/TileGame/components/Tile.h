@@ -22,6 +22,8 @@ class Tile {
     0x9400D3
     };
 
+  void light();
+
  public:
   // constructors
   Tile(vector<Point> points);
@@ -29,6 +31,10 @@ class Tile {
 
   const vector<Point> getSubPoints();
   void reset();
+  const uint8_t getRank();
   void rankUp();
-  void light();
+  void setRank(uint8_t newRank);
+
+  bool operator==(const Tile& other) const;
+  bool operator!=(const Tile& other) const;
 };

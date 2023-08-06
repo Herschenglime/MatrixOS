@@ -1,6 +1,5 @@
 #include "Tile.h"
 
-
 Tile::Tile(vector<Point> points) {
   subPoints = points;
 }
@@ -20,13 +19,31 @@ void Tile::reset() {
   rank = 0;
 }
 
+const uint8_t Tile::getRank() {
+  return rank;
+}
+
 void Tile::rankUp() {
   rank++;
   light();
 }
 
+void Tile::setRank(uint8_t newRank) {
+  rank = newRank;
+  light();
+}
+
 void Tile::light() {
-  for (Point point : subPoints) {
-      MatrixOS::LED::SetColor(point, rankColors.at(rank), 0); 
+  for (Point point : subPoints)
+  {
+    MatrixOS::LED::SetColor(point, rankColors.at(rank), 0);
   }
+}
+
+inline bool Tile::operator==(const Tile& other) const {
+  return (this->rank == other.rank);
+}
+
+inline bool Tile::operator!=(const Tile& other) const {
+  return !(*this == other);
 }

@@ -1,13 +1,14 @@
 #include "TileGame.h"
-#include "ui/UI.h"  // Include the UI Framework
 #include <vector>
 #include "components/Game.h"
+#include "ui/UI.h"  // Include the UI Framework
+
+Game game;
 
 // Run once
 void TileGameAPP::Setup() {
+  game.init();
   MLOGI("TileGame", "TileGame Started");
-
-  Game game;
 }
 
 // Run in a loop after Setup()
@@ -32,14 +33,13 @@ void TileGameAPP::KeyEventHandler(uint16_t keyID, KeyInfo* keyInfo) {
   if (xy)                                                           // IF XY is valid, means it is a key on the grid
   {
     MLOGD("TileGame", "Key %d %d %d", xy.x, xy.y, keyInfo->state);  // Print the key event to the debug log
-    if (keyInfo->state == PRESSED)                                  // Key is pressed
+    if (keyInfo->state == RELEASED)
     {
-      MatrixOS::LED::SetColor(xy, color, 0);  // Set the LED color to a color. Last 0 means writes to the active layer (255 writes to the active layer as well but do not trigger
-                                              // auto update.)
-    }
-    else if (keyInfo->state == RELEASED)
-    {
-      MatrixOS::LED::SetColor(xy, 0x000000, 0);  // Set the LED to off
+      // handle keypresses (on either side)
+      if (xy == Point(2, 7) || xy == Point(7,7))
+      {
+        game.moveRight();
+      }
     }
   }
   else                          // XY Not valid,
