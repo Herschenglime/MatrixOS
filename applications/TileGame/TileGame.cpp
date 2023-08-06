@@ -7,7 +7,7 @@ Game game;
 
 // Run once
 void TileGameAPP::Setup() {
-  game.init();
+  game.init(true);
   MLOGI("TileGame", "TileGame Started");
 }
 
@@ -36,7 +36,7 @@ void TileGameAPP::KeyEventHandler(uint16_t keyID, KeyInfo* keyInfo) {
     if (keyInfo->state == RELEASED)
     {
       // handle keypresses (on either side)
-      if (xy == Point(2, 7) || xy == Point(7,7))
+      if (xy == Point(2, 7) || xy == Point(7, 7))
       {
         game.moveRight();
       }
@@ -137,6 +137,10 @@ void TileGameAPP::UIMenu() {
   );
   // Place this button in the center of the device
   menu.AddUIComponent(brightnessBtn, Point((Device::x_size - 1) / 2, (Device::y_size - 1) / 2));
+
+  // allow for reset and flashing from game menu during development
+  UIButton enterDfuBtn("Enter DFU Mode", Color(0xFF0000), []() -> void { MatrixOS::SYS::Bootloader(); });
+  menu.AddUIComponent(enterDfuBtn, Point(0, Device::y_size - 1));
 
   // Set a key event handler for the UI object
   // By default, the UI exits after the function key is PRESSED.
