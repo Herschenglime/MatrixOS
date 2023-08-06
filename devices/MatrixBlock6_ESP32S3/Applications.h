@@ -11,6 +11,7 @@
 #include "applications/Lighting/Lighting.h"
 // #include "applications/HIDtest/HIDtest.h"
 #include "applications/Example/Example.h"
+#include "applications/TileGame/TileGame.h"
 
 // BOOT ANIMATION
 #include "applications/Matrix/MatrixBoot/MatrixBoot.h"

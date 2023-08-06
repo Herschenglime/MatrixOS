@@ -6,6 +6,6 @@
   struct TileGrid {
     vector<vector<Tile>> tiles; //4 rows, 4 columns
 
-    void lightTile(int col, int row);
+    //constructor
     TileGrid();
   };

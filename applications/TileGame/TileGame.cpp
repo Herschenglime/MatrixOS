@@ -1,23 +1,13 @@
 #include "TileGame.h"
 #include "ui/UI.h"  // Include the UI Framework
 #include <vector>
-#include "components/TileGrid.h"
-
+#include "components/Game.h"
 
 // Run once
 void TileGameAPP::Setup() {
   MLOGI("TileGame", "TileGame Started");
 
-  MLOGD("TileGame", "About to initialize grid");
-  TileGrid grid;
-
-  // test lightup
-   grid.lightTile(0, 0);
-   grid.lightTile(1, 1);
-   grid.lightTile(1, 2);
-   grid.lightTile(3, 0);
-
-  MLOGI("TileGame", "Example tile set");
+  Game game;
 }
 
 // Run in a loop after Setup()

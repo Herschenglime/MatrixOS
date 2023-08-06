@@ -37,11 +37,3 @@ TileGrid::TileGrid() {
     MLOGD("TileGame", "Column added to grid");
   }
 }
-
-//should light up all 4 points within the tile
-void TileGrid::lightTile(int col, int row) {
-  Tile tileToLight = tiles.at(col).at(row);
-  for (Point point : tileToLight.subPoints) {
-      MatrixOS::LED::SetColor(point, 0x0000FF, 0); 
-  }
-}
