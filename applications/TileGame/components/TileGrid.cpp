@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "TileGrid.h"
 
 TileGrid::TileGrid() {
@@ -23,6 +25,8 @@ TileGrid::TileGrid() {
             bottomRight.y);
 
       Tile newTile(topLeft, topRight, bottomLeft, bottomRight);
+      newTile.col = colNum;
+      newTile.row = rowNum;
       MLOGD("TileGame", "New tile created");
 
       column.push_back(newTile);
@@ -34,13 +38,24 @@ TileGrid::TileGrid() {
   }
 }
 
-void TileGrid::moveTile(Tile& originalPos, Tile& newPos) {
-  newPos.setRank(originalPos.getRank());
-  originalPos.setRank(0);
+void TileGrid::removeFromEmpty(Tile& tile) {
+  // remove spawned tile from empty list
+  auto position = find(emptyTiles.begin(), emptyTiles.end(), &tile);
+  if (position != emptyTiles.end())  // == grid.emptyTiles.end() means the element was not found
+    emptyTiles.erase(position);
+
+  MLOGD("TileGame", "Tile at (%d, %d) removed from empty list.", tile.col, tile.row);
+}
+
+void TileGrid::moveTile(Tile& original, Tile& newPos) {
+  newPos.setRank(original.getRank());
+  original.setRank(0);
+  emptyTiles.push_back(&original);
 }
 
 void TileGrid::combineTiles(Tile& original, Tile& destination) {
   destination.rankUp();
   original.setRank(0);
+  emptyTiles.push_back(&original);
   MLOGD("TileGame", "Tiles combined!");
 }

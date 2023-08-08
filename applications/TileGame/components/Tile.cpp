@@ -17,6 +17,7 @@ const vector<Point> Tile::getSubPoints() {
 
 void Tile::reset() {
   rank = 0;
+  light();
 }
 
 uint8_t Tile::getRank() const {

@@ -35,22 +35,27 @@ void TileGameAPP::KeyEventHandler(uint16_t keyID, KeyInfo* keyInfo) {
     MLOGD("TileGame", "Key %d %d %d", xy.x, xy.y, keyInfo->state);  // Print the key event to the debug log
     if (keyInfo->state == RELEASED)
     {
+      bool spawnNewTile = false;
       // handle keypresses (on either side)
       if (xy == Point(1, 6) || xy == Point(6, 6))
       {
-        game.moveUp();
+        spawnNewTile = game.moveUp();
       }
       if (xy == Point(0, 7) || xy == Point(5, 7))
       {
-        game.moveLeft();
+        spawnNewTile = game.moveLeft();
       }
       if (xy == Point(1, 7) || xy == Point(6, 7))
       {
-        game.moveDown();
+        spawnNewTile = game.moveDown();
       }
       if (xy == Point(2, 7) || xy == Point(7, 7))
       {
-        game.moveRight();
+        spawnNewTile = game.moveRight();
+      }
+
+      if (spawnNewTile) {
+        game.spawnTile();
       }
     }
   }
