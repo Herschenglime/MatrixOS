@@ -1,12 +1,11 @@
 #include "Tile.h"
 
+//TODO: Make debug game state display to show problems colors (and other issues?)
 Color rankColorsData[] = {
   0x000000, 
   0xFF0000,
   0xFF8800,
-  0xFFC800,
-  0xF2FF00,
-  0x6AFF00,
+  0x00ff1a,
   0x00FFA2,
   0x00FFE6,
   0x00D9FF,

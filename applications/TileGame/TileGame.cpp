@@ -7,7 +7,7 @@ Game game;
 
 // Run once
 void TileGameAPP::Setup() {
-  game.init(true);
+  game.init();
   MLOGI("TileGame", "TileGame Started");
 }
 

@@ -388,7 +388,14 @@ void Game::spawnTileAt(uint8_t col, uint8_t row) {
 }
 
 void Game::spawnTileAt(Tile& tile) {
-  tile.rankUp();
+  // handle 10% chance of 4 spawning (rank 2)
+  bool spawn4 = (rand() % 100) < 10;
+
+  if (spawn4) {
+    tile.setRank(2);
+  } else {
+    tile.rankUp();
+  }
 
   MLOGD("TileGame", "Tile spawned at (%d, %d)", tile.col, tile.row);
 }
