@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "TileGrid.h"
 
 TileGrid::TileGrid() {
@@ -23,6 +25,8 @@ TileGrid::TileGrid() {
             bottomRight.y);
 
       Tile newTile(topLeft, topRight, bottomLeft, bottomRight);
+      newTile.col = colNum;
+      newTile.row = rowNum;
       MLOGD("TileGame", "New tile created");
 
       column.push_back(newTile);
@@ -34,9 +38,9 @@ TileGrid::TileGrid() {
   }
 }
 
-void TileGrid::moveTile(Tile& originalPos, Tile& newPos) {
-  newPos.setRank(originalPos.getRank());
-  originalPos.setRank(0);
+void TileGrid::moveTile(Tile& original, Tile& newPos) {
+  newPos.setRank(original.getRank());
+  original.setRank(0);
 }
 
 void TileGrid::combineTiles(Tile& original, Tile& destination) {

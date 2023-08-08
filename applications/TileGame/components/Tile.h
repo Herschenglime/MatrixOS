@@ -37,4 +37,7 @@ class Tile {
 
   bool operator==(const Tile& other) const;
   bool operator!=(const Tile& other) const;
+
+  int8_t col = -1;
+  int8_t row = -1;
 };

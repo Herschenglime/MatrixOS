@@ -7,8 +7,8 @@ class Game {
   TileGrid grid;
 
 
-  void spawnTile();
   void spawnTileAt(uint8_t col, uint8_t row);
+  void spawnTileAt(Tile& tile);
 
  public:
   // constructor
@@ -20,4 +20,5 @@ class Game {
   bool moveLeft();
   bool moveDown();
   bool moveUp();
+  void spawnTile();
 };

@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "Game.h"
 
 void Game::init() {
@@ -225,7 +227,7 @@ bool Game::moveDown() {
           }
 
           auto& nextTile = *nextTilePtr;
-          MLOGD("TileGame", "Tile for comparison is at (%d, %d) and has rank %d",colNum, nextRow, nextTile.getRank());
+          MLOGD("TileGame", "Tile for comparison is at (%d, %d) and has rank %d", colNum, nextRow, nextTile.getRank());
           if (nextTile.getRank() == 0)
           {
             // move tile to new location
@@ -275,7 +277,7 @@ bool Game::moveUp() {
   // move each tile from top to bottom in each row
   for (int8_t rowNum = 0; rowNum < 4; rowNum++)
   {
-    //make convenience vector to make code more copyable from other move methods
+    // make convenience vector to make code more copyable from other move methods
     vector<Tile*> row;
     row.reserve(4);
     for (uint8_t i = 0; i < 4; i++)
@@ -308,7 +310,7 @@ bool Game::moveUp() {
           }
 
           auto& prevTile = *prevTilePtr;
-          MLOGD("TileGame", "Tile for comparison is at (%d, %d) and has rank %d",colNum, prevRow, prevTile.getRank());
+          MLOGD("TileGame", "Tile for comparison is at (%d, %d) and has rank %d", colNum, prevRow, prevTile.getRank());
           if (prevTile.getRank() == 0)
           {
             // move tile to new location
@@ -352,17 +354,23 @@ bool Game::moveUp() {
   return tileMoved;
 }
 
+//TODO: Optimize removal of empty tiles, particularly with random spawn and knowing the index
+//also fix crashing 
 void Game::spawnTile() {
-  // randomize later
-  uint8_t col = 0;
-  uint8_t row = 0;
+  // randomly select empty tile from list
 
-  spawnTileAt(col, row);
+  spawnTileAt(0,0);
 }
 
 void Game::spawnTileAt(uint8_t col, uint8_t row) {
-  grid.tiles.at(col).at(row).rankUp();
-  MLOGD("TileGame", "Tile spawned at (%d, %d)", col, row);
+  auto& tile = grid.tiles.at(col).at(row);
+  spawnTileAt(tile);
+}
+
+void Game::spawnTileAt(Tile& tile) {
+  tile.rankUp();
+
+  MLOGD("TileGame", "Tile spawned at (%d, %d)", tile.col, tile.row);
 }
 
 Game::Game() {
