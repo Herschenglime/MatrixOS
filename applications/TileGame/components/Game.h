@@ -20,5 +20,5 @@ class Game {
   bool moveLeft();
   bool moveDown();
   bool moveUp();
-  void spawnTile();
+  void processBoard();
 };

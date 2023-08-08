@@ -1,4 +1,7 @@
 #include <algorithm>
+#include <utility>
+
+using std::pair;
 
 #include "Game.h"
 
@@ -26,7 +29,7 @@ void Game::init(bool debug) {
   }
   else
   {
-    spawnTile();
+    processBoard();
   }
 
   MLOGD("TileGame", "Game initiated");
@@ -356,8 +359,16 @@ bool Game::moveUp() {
 
 //TODO: Optimize removal of empty tiles, particularly with random spawn and knowing the index
 //also fix crashing 
-void Game::spawnTile() {
-  // randomly select empty tile from list
+void Game::processBoard() {
+  //create vector of empty tile coords
+  vector<pair<uint8_t, uint8_t>> emptyCoords;
+
+  // go through tiles and grab coords of empty tiles
+  for (auto& column : grid.tiles) {
+    for (auto& tile : column) {
+
+    }
+  }
 
   spawnTileAt(0,0);
 }

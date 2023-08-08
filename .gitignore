@@ -1,6 +1,9 @@
 .vs/
 .vscode/
 .VSCodeCounter/
+.ccls-cache/
+cmake-build-debug/
+.idea/
 build/
 
 # Prerequisites
@@ -23,6 +26,7 @@ build/
 *.so
 *.dylib
 *.dll
+sdkconfig
 
 # Fortran module files
 *.mod

@@ -55,7 +55,7 @@ void TileGameAPP::KeyEventHandler(uint16_t keyID, KeyInfo* keyInfo) {
       }
 
       if (spawnNewTile) {
-        game.spawnTile();
+        game.processBoard();
       }
     }
   }
