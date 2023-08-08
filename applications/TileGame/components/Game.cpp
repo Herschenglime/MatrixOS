@@ -361,16 +361,25 @@ bool Game::moveUp() {
 //also fix crashing 
 void Game::processBoard() {
   //create vector of empty tile coords
-  vector<pair<uint8_t, uint8_t>> emptyCoords;
+  vector<pair<int8_t, int8_t>> emptyCoords;
 
   // go through tiles and grab coords of empty tiles
   for (auto& column : grid.tiles) {
     for (auto& tile : column) {
-
+      if (tile.getRank() == 0) {
+        emptyCoords.push_back({tile.col, tile.row});
+      }
     }
   }
 
-  spawnTileAt(0,0);
+  //pick random index within scope of vector
+  uint8_t upperLimit = emptyCoords.size();
+  uint8_t randIndex = rand() % upperLimit;
+
+  auto chosenCoords = emptyCoords.at(randIndex);
+
+  //Spawn tile at said coords
+  spawnTileAt(chosenCoords.first, chosenCoords.second);
 }
 
 void Game::spawnTileAt(uint8_t col, uint8_t row) {
