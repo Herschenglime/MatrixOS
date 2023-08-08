@@ -46,5 +46,6 @@ void TileGrid::moveTile(Tile& original, Tile& newPos) {
 void TileGrid::combineTiles(Tile& original, Tile& destination) {
   destination.rankUp();
   original.setRank(0);
+  emptyTiles.push_back(&original);
   MLOGD("TileGame", "Tiles combined!");
 }
